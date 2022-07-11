@@ -9,10 +9,9 @@ import './app.css';
 
 const App = () => {
     return (
-        <div>
+        <div className="window">
             <Header />
             <RandomPlanet />
-
             <div className="row mb2">
                 <div className="col-md-6">
                     <ItemList />
