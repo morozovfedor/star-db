@@ -6,3 +6,11 @@
 .toggle-planet {
     margin-left: 15px;
 }
+
+.button-row {
+    margin-left: 0;
+}
+
+.btn {
+    margin-right: 10px;
+}
