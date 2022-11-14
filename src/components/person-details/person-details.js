@@ -28,13 +28,11 @@ export default class PersonDetails extends Component {
         this.swapiService.getPerson(personId).then((person) => {
             this.setState({ person });
         });
-
-        console.log(this.state)
     }
 
     render() {
         if (!this.state.person) {
-            return (<span>Select a person from list</span>);
+            return <span>Select a person from list</span>;
         }
 
         const { id, name, gender, birthYear, eyeColor } = this.state.person;
@@ -44,6 +42,7 @@ export default class PersonDetails extends Component {
                 <img
                     className="person-image"
                     src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
+                    alt={name}
                 />
 
                 <div className="card-body">
