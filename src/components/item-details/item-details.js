@@ -1,48 +1,50 @@
 import React, { Component } from 'react';
-import './person-details.css';
+import './item-details.css';
 import SwapiService from '../../services/swapi-service';
 import ErrorButton from '../error-button';
 
-export default class PersonDetails extends Component {
+export default class ItemDetails extends Component {
     swapiService = new SwapiService();
 
     state = {
-        person: null,
+        item: null,
+        image: null,
     };
 
     componentDidMount() {
-        this.updatePerson();
+        this.updateItem();
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.personId !== prevProps.personId) {
-            this.updatePerson();
+        if (this.props.itemId !== prevProps.itemId) {
+            this.updateItem();
         }
     }
 
-    updatePerson() {
-        const { personId } = this.props;
-        if (!personId) {
+    updateItem() {
+        const { itemId, getData, getImageUrl } = this.props;
+        if (!itemId) {
             return;
         }
 
-        this.swapiService.getPerson(personId).then((person) => {
-            this.setState({ person });
+        getData(itemId).then((item) => {
+            this.setState({ item, image: getImageUrl(item) });
         });
     }
 
     render() {
-        if (!this.state.person) {
-            return <span>Select a person from list</span>;
+        const { item, image } = this.state;
+        if (!item) {
+            return <span>Select a item from list</span>;
         }
 
-        const { id, name, gender, birthYear, eyeColor } = this.state.person;
+        const { id, name, gender, birthYear, eyeColor } = item;
 
         return (
-            <div className="person-details card">
+            <div className="item-details card">
                 <img
-                    className="person-image"
-                    src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
+                    className="item-image"
+                    src={image}
                     alt={name}
                 />
 
@@ -61,9 +63,11 @@ export default class PersonDetails extends Component {
                             <span className="term">Eye Color:</span>
                             <span>{eyeColor}</span>
                         </li>
+                        <li className="list-group-item">
+                            <ErrorButton />
+                        </li>
                     </ul>
                 </div>
-                <ErrorButton />
             </div>
         );
     }
